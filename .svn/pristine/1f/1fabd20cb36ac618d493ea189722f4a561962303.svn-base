@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mytest.dao.RoleDao" >
+  <!--<resultMap id="BaseResultMap" type="com.mytest.pojo.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+  </resultMap>-->
+
+  <!--<sql id="Base_Column_List" >
+    id, user_name, password, age ,birthday
+  </sql>-->
+
+  <!-- 根据用户名查询密码 -->
+  <select id="getPasswordByUserName" resultType="java.lang.String" parameterType="java.lang.String" >
+    select
+     t.password
+    from user_t t
+    where t.user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+
+
+  <!-- 根据用户ID查询当前的权限 -->
+  <select id="getPermissionByUserId" resultMap="java.util.Map" parameterType="java.lang.Integer" >
+    select
+      p.perm_name
+    from role_permission p INNER JOIN user_role r ON p.role_id=r.role_id
+    where r.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+</mapper>
