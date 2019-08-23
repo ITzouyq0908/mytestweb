@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User modfireUserById(User user) {
-        return userDao.modfireUserById(user);
+    public void modfireUserById(User user) {
+        userDao.modfireUserById(user);
     }
 
     @Override

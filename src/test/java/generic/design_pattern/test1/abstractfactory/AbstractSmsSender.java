@@ -3,11 +3,11 @@ package generic.design_pattern.test1.abstractfactory;
 /**
  * @Author: zouyongqi
  * @Description:
- * @Date: Created in 上午12:38 2018/12/20
+ * @Date: Created in 下午5:25 2019/1/4
  */
-public class AbstractSmsSender implements AbstradtSender {
+public class AbstractSmsSender implements AbstractSender {
     @Override
-    public void send() {
-        System.out.println("this is abstract smssender!");
+    public void sender() {
+        System.out.println("this is abstraceSmsSender!");
     }
 }

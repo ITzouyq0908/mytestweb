@@ -4,15 +4,13 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
   <display-name>Archetype Created Web Application</display-name>
-  <!-- Spring和mybatis的配置文件 -->
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:applicationContext.xml</param-value>
-  </context-param>
+
   <!-- 编码过滤器 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <!-- async-supported是servlet 3.0后推出的新特性，解决多线程调用servler时，由于后面的业务处理可能
+     耗时较久，造成后面线程处于阻塞状态，配置为true后表示启用异步调用，提高效率 -->
     <async-supported>true</async-supported>
     <init-param>
       <param-name>encoding</param-name>
@@ -24,41 +22,54 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- Spring监听器 -->
-  <listener>
+  <!--spring init -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:applicationContext.xml</param-value>
+  </context-param>
+    <context-param>
+        <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>/logback.xml,/logback-test.xml</param-value>
+    </context-param>
+    <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <!-- 防止Spring内存溢出监听器 -->
-  <listener>
-    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
 
   <!-- Spring MVC servlet -->
+
   <servlet>
-    <servlet-name>SpringMVC</servlet-name>
+    <servlet-name>SpringMvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:spring-mvc.xml</param-value>
+      <param-value>classpath*:spring-*.xml,classpath*:applicationContext.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-    <async-supported>true</async-supported>
   </servlet>
-  <servlet-mapping>
-    <servlet-name>SpringMVC</servlet-name>
-    <!-- 此处可以可以配置成*.do，对应struts的后缀习惯 -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>SpringMvc</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
 
-  <!-- 配置shiro的核心拦截器 -->
-  <filter>
+
+    <!-- 配置shiro的核心拦截器 -->
+  <!--<filter>
     <filter-name>shiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
     <url-pattern>*.html</url-pattern>
-  </filter-mapping>
+  </filter-mapping>-->
 
   <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>

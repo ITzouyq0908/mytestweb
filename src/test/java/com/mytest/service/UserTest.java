@@ -1,7 +1,6 @@
 package com.mytest.service;
 
 import com.mytest.pojo.User;
-import com.mytest.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -12,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @Author: zouyongqi
@@ -49,6 +49,17 @@ public class UserTest {
         user.setPassword("fadfaf");
         user.setAge(12);
         userSevice.insertUser(user);
+    }
+
+    @Test
+    public void updateUserTest() {
+        User user = new User();
+        user.setId(1);
+        user.setUserName("李四");
+        user.setAge(33);
+        user.setPassword("1111");
+        user.setBirthday(new Date());
+        userSevice.modfireUserById(user);
     }
 
 

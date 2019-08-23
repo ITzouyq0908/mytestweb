@@ -3,8 +3,8 @@ package generic.design_pattern.test1.abstractfactory;
 /**
  * @Author: zouyongqi
  * @Description:
- * @Date: Created in 上午12:40 2018/12/20
+ * @Date: Created in 下午5:26 2019/1/4
  */
 public interface Provider {
-    AbstradtSender produce();
+    AbstractSender produce();
 }

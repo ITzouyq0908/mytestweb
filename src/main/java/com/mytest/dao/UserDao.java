@@ -1,7 +1,6 @@
 package com.mytest.dao;
 
 import com.mytest.pojo.User;
-import org.springframework.stereotype.Repository;
 
 //@Repository("userDao")
 public interface UserDao extends BaseDao{
@@ -16,7 +15,7 @@ public interface UserDao extends BaseDao{
      * @param user
      * @return
      */
-    public User modfireUserById(User user);
+    public void modfireUserById(User user);
 
     public void insertUser(User user);
 

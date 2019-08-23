@@ -1,5 +1,7 @@
 package generic.design_pattern.test1.factory;
 
+import generic.design_pattern.test1.Sender;
+
 /**
  * @Author: zouyongqi
  * @Description:

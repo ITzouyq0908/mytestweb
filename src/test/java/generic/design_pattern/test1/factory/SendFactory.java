@@ -1,5 +1,9 @@
 package generic.design_pattern.test1.factory;
 
+import generic.design_pattern.test1.MailSender;
+import generic.design_pattern.test1.Sender;
+import generic.design_pattern.test1.SmsSender;
+
 /**
  * @Author: zouyongqi
  * @Description:

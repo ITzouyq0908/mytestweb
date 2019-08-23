@@ -12,7 +12,7 @@ public interface UserService {
 
     public void insertUser(User user);
 
-    public User modfireUserById(User user);
+    public void modfireUserById(User user);
 
     Integer countByExample();
 

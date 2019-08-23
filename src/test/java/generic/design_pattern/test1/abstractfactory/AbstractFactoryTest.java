@@ -3,16 +3,19 @@ package generic.design_pattern.test1.abstractfactory;
 /**
  * @Author: zouyongqi
  * @Description:
- * @Date: Created in 上午12:43 2018/12/20
+ * @Date: Created in 下午5:30 2019/1/4
  */
 public class AbstractFactoryTest {
     public static void main(String[] args) {
-        AbstractSenderMailFactory asmf = new AbstractSenderMailFactory();
-        AbstradtSender s1 = asmf.produce();
-        s1.send();;
+        AbstractEmailFactory emailFactory = new AbstractEmailFactory();
+        AbstractSender s = emailFactory.produce();
+        s.sender();
 
-        AbstractSenderSmsFactory assm = new AbstractSenderSmsFactory();
-        AbstradtSender s2 = assm.produce();
-        s2.send();
+        int ret = 1024 * 1024;
+        Runtime runtime = Runtime.getRuntime();
+        System.out.println("MAX_MEMORY: " + ((double)runtime.maxMemory()/ret) + "m");
+        System.out.println("TOTAL_MEMORY: " + ((double)runtime.totalMemory()/ret) + "m");
+        System.out.println("FREE_MEMORY: " + ((double)runtime.freeMemory()/ret) + "m");
+
     }
 }

@@ -29,10 +29,17 @@
   </delete>
   <!-- 新增数据 -->
   <insert id="insertUser" parameterType="com.mytest.pojo.User" >
-    insert into user_t (id, user_name, password,
+    insert into user_t (
+      id,
+      user_name,
+      password,
       age)
-    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-      #{age,jdbcType=INTEGER}, #{birthday,jdbcType=INTEGER})
+    values (
+      #{id,jdbcType=INTEGER},
+      #{userName,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR},
+      #{age,jdbcType=INTEGER},
+      #{birthday,jdbcType=INTEGER})
   </insert>
 
   <!-- 统计数量 -->
@@ -41,11 +48,12 @@
   </select>
 
   <!-- 更新数据 -->
-  <update id="updateByPrimaryKey" parameterType="com.mytest.pojo.User" >
+  <update id="modfireUserById" parameterType="com.mytest.pojo.User" >
     update user_t
-    set user_name = #{userName,jdbcType=VARCHAR},
+    set
+      user_name = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER}
+      age = #{age,jdbcType=INTEGER},
       birthday = #{birthday,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
