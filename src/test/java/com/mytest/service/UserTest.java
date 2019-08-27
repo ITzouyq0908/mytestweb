@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -20,7 +21,7 @@ import java.util.Date;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 /*@ContextConfiguration("classpath:spring-mybatis.xml")*/
-@ContextConfiguration("classpath:applicationContext.xml")
+@ContextConfiguration("classpath:spring-context.xml")
 public class UserTest {
 
     @Autowired
@@ -36,10 +37,9 @@ public class UserTest {
         System.out.println("mapperLocations: " + Arrays.toString(resources));
         User user = userSevice.getUserById(2);
 
-
-
+        System.out.println("user: " + user);
         System.out.println("username: " + user.getUserName());
-        System.out.println("username: " + user.getPassword());
+        System.out.println("password: " + user.getPassword());
     }
 
     @Test
@@ -69,4 +69,23 @@ public class UserTest {
         System.out.println("count: " + count);
     }
 
-}
+    public static void main(String[] args) throws Exception{
+
+        Class clazz = Class.forName("com.mytest.pojo.User");
+        Object obj = clazz.newInstance();
+
+        Method setMethod = clazz.getMethod("setUserName", String.class);
+
+        setMethod.invoke(obj,"说的");
+
+        Method method = clazz.getMethod("getUserName");
+        Object val = method.invoke(obj);
+        System.out.println(val);
+
+
+//        PropertyDescriptor descriptor =
+
+    }
+
+
+ }

@@ -53,6 +53,7 @@ public class UserController {
         logger.info("userId:" + userId);
         User user = this.userService.getUserById(userId);
         logger.info("user:" + user);
+
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(user));
         response.getWriter().close();

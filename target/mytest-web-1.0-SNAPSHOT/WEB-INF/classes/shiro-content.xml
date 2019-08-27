@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <!-- shiro配置 -->
+    <bean id="myShiroRealm" class="com.mytest.core.UserRealm"/>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myShiroRealm"/>
+        <!--加入rememberMe的设置-->
+        <property name="rememberMeManager" ref="rememberMeManager"/>
+    </bean>
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+
+        <!--去登录的地址-->
+        <property name="loginUrl" value="/gologin.html"/>
+        <!--登录成功的跳转地址-->
+        <property name="successUrl" value="/index.html"/>
+        <!--验证失败的跳转地址-->
+        <property name="unauthorizedUrl" value="/error.jsp"/>
+        <!--定义过滤的规则-->
+        <!--复杂的系统中，url和权限都可以从数据库中读取-->
+        <!--anon是不需要验证，authc时需要验证，perms[admin]代表要admin权限-->
+        <property name="filterChainDefinitions">
+            <value>
+                /gologin.html = anon
+                /login.html = anon
+                /doadd.html = authc, perms[perm1,perm2]
+                /doget.html = authc, perms[admin]
+                /doupdate.html = authc, perms[perm1]
+                /dodel.html = authc, perms[perm2]
+            </value>
+        </property>
+        <!-- 自定义规则 -->
+        <!--<property name="filterChainDefinitions" ref="shiroChainDefinitions"/>-->
+        <!--修改后的过滤规则，从and变成or-->
+        <!--<property name="filters">
+            <map>
+                <entry key="perms">
+                    <bean class="com.mytest.core.RoleShiroPermFilter"/>
+                </entry>
+            </map>
+        </property>-->
+    </bean>
+
+    <!--声明自定义规则-->
+    <!--动态配置过滤规则
+    在实际开发中，url和对应的访问权限可能需要从数据库中读取，
+    我们可以定义一个工具类从数据库中读取访问权限并传递给Shiro-->
+    <!--<bean id="shiroChainDefinitions" class="com.mytest.mapping.ShiroChainDefinitions">
+        &lt;!&ndash;静态的条件&ndash;&gt;
+        <property name="filterChainDefinitions">
+            <value>
+                /gologin.html = anon
+                /login.html = anon
+                /doadd.html = authc, perms[perm1,perm2]
+                /doget.html = authc, perms[admin]
+                /doupdate.html = authc, perms[perm1]
+                /dodel.html = authc, perms[perm2]
+                /logout.html=user
+            </value>
+        </property>
+    </bean>-->
+
+    <!--shiro过滤器过滤属性含义：
+    securityManager：这个属性是必须的。
+    loginUrl ：没有登录的用户请求需要登录的页面时自动跳转到登录页面，不是必须的属性，不输入地址的话会自动寻找项目web项目的根目录下的”/login.jsp”页面。
+    successUrl ：登录成功默认跳转页面，不配置则跳转至”/”。如果登陆前点击的一个需要登录的页面，则在登录自动跳转到那个需要登录的页面。不跳转到此。
+    unauthorizedUrl ：没有权限默认跳转的页面
+
+    其权限过滤器及配置释义：
+    anon:
+    例子/admins/**=anon 没有参数，表示可以匿名使用。
+    authc:
+    例如/admins/user/**=authc表示需要认证(登录)才能使用，没有参数
+    roles(角色)：
+    例子/admins/user/**=roles[admin],参数可以写多个，参数之间用逗号分割，当有多个参数时，例如admins/user/**=roles["admin,guest"],每个参数通过才算通过，相当于hasAllRoles()方法。
+    perms（权限）：
+    例子/admins/user/**=perms[add],参数可以写多个，例如/admins/user/**=perms["add, modify"]，当有多个参数时必须每个参数都通过才通过，想当于isPermitedAll()方法。
+    rest：
+    例子/admins/user/**=rest[user],根据请求的方法，相当于/admins/user/**=perms[user:method] ,其中method为post，get，delete等。
+    port：
+    例子/admins/user/**=port[8081],当请求的url的端口不是8081是跳转到schemal://serverName:8081?queryString,其中schmal是协议http或https等，serverName是你访问的host,8081是url配置里port的端口，queryString
+    是你访问的url里的？后面的参数。
+    authcBasic：
+    例如/admins/user/**=authcBasic没有参数.表示httpBasic认证
+    ssl:
+    例子/admins/user/**=ssl没有参数，表示安全的url请求，协议为https
+    user:
+    例如/admins/user/**=user没有参数表示必须存在用户，当登入操作时不做检查-->
+
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!-- 浏览器中cookie的名字 -->
+        <constructor-arg value="rememberMeShiro"/>
+        <!--document对象中就看不到cookie了-->
+        <property name="httpOnly" value="true"/>
+        <!-- 30天 -->
+        <property name="maxAge" value="2592000"/>
+    </bean>
+
+    <!-- rememberMe管理器 -->
+    <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <!--秘钥要16位，24位或32位的Base64。这个解密后是1234567890abcdef-->
+        <property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('MTIzNDU2Nzg5MGFiY2RlZg==')}"/>
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+</beans>
