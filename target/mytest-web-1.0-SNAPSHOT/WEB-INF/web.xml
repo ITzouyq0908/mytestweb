@@ -23,14 +23,15 @@
   </filter-mapping>
 
   <!--spring init -->
-  <context-param>
+  <!-- 配置SpringMvc时，将spring的applicationContext.xml(可根据需要改名)加载进去，这里就不用配置spring监听 -->
+  <!--<context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:spring-context.xml</param-value>
   </context-param>
 
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
+  </listener>-->
 
   <!-- Spring MVC servlet -->
 

@@ -16,7 +16,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         <layout class="ch.qos.logback.classic.PatternLayout">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
             <pattern>
-                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{T}] %-5level  %logger{50} - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%X{TID}] %-5level  %logger{50} - %msg%n
             </pattern>
         </layout>
     </appender>
@@ -61,7 +61,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
         %logger{50} 表示logger名字最长50个字符，否则按照句点分割。 %msg：日志消息，%n是换行符
         -->
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] [%X{T}] - [ %-5level ] [ %logger{50} : %line ] - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] [%X{TID}] - [ %-5level ] [ %logger{50} : %line ] - %msg%n</pattern>
         </layout>
     </appender>
 
@@ -78,7 +78,7 @@ debug：当此属性设置为true时，将打印出logback内部日志信息，�
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] [%X{T}] - [ %-5level ] [ %logger{50} : %line ] - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] [%X{TID}] - [ %-5level ] [ %logger{50} : %line ] - %msg%n</pattern>
         </layout>
     </appender>
 

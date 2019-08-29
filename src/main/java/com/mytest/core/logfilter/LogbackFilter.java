@@ -13,8 +13,7 @@ import java.util.UUID;
  */
 public class LogbackFilter implements Filter {
 
-//    private static final String UNIQUE_ID = "traceRootId";
-    private static final String UNIQUE_ID = "TID";
+    private final static String UNIQUE_ID = "TID";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
